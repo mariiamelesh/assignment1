@@ -35,9 +35,14 @@ namespace Meow
 					computationStack.Push(function1(A));
                 }
 				else if (binaryOperators.TryGetValue(token, out Func<double, double, double> function2)) {
+					if (computationStack.Count >= 2) {
 					double B = computationStack.Pop();
 					double A = computationStack.Pop();
 					computationStack.Push(function2(A, B));
+					}
+					else {
+						throw new Exception("Incorrect input");
+					}
 				}
             }
 			if (computationStack.Count > 0) {
