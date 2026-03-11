@@ -13,12 +13,23 @@ namespace Meow
 
             foreach (char character in equation) 
             {
-                if (char.IsWhiteSpace(character)) continue;
+                if (char.IsWhiteSpace(character)) {
+					continue;
+				}
 
-                if (char.IsLetterOrDigit(character) || character == '.') 
+                if (char.IsLetterOrDigit(character)) 
                 {
                     currentToken += character; 
                 }
+				
+				else if (character == ',') {
+					if (currentToken.Length > 0) {
+						tokens.Enqueue(currentToken);
+					}
+						tokens.Enqueue(",");
+						currentToken = "";
+				}
+				
                 else 
                 {
                     if (currentToken.Length > 0) 
@@ -33,6 +44,7 @@ namespace Meow
             if (currentToken.Length > 0) 
             {
                 tokens.Enqueue(currentToken);
+				currentToken = "";
             }
 
             return tokens;
