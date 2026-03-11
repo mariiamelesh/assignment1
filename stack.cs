@@ -13,7 +13,7 @@ namespace Meow
         public void Push(string value) 
         {
             if (_pointer >= Capacity) {
-				throw new StackOverflowException("Stack overflowed");
+				throw new Exception("Stack overflowed");
 			}
             _array[_pointer++] = value;
         }
@@ -21,14 +21,19 @@ namespace Meow
         public string Pop() 
         {
             if (IsEmpty) {
-				throw new InvalidOperationException("Stack underflowed");
+				throw new Exception("Stack underflowed");
 			}
             return _array[--_pointer];
         }
 
         public string Peek() 
         {
-            return IsEmpty ? null : _array[_pointer - 1];
+            if (IsEmpty) {
+				return null;
+			}
+			else {
+				return _array[_pointer - 1];
+			}
         }
     }
 	
@@ -44,7 +49,7 @@ namespace Meow
         public void Push(double value) 
         {
             if (_pointer >= Capacity) {
-				throw new StackOverflowException("Stack overflowed");
+				throw new Exception("Stack overflowed");
 			}
             _array[_pointer++] = value;
         }
@@ -52,13 +57,17 @@ namespace Meow
         public double Pop() 
         {
             if (IsEmpty) {
-				throw new InvalidOperationException("Stack underflowed");
+				throw new Exception("Stack underflowed");
 			}
             return _array[--_pointer];
         }
 
         public double Peek() 
         {
+            if (IsEmpty) {
+				throw new Exception("Nothing to peek at");
+			}
+			
 			return _array[_pointer - 1];
         }
     }
