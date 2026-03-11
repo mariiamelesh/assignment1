@@ -6,33 +6,35 @@ namespace Meow
     {
         private const int Capacity = 50;
         private string[] _array = new string[Capacity];
-        private int _pointer;
-		public int Count => _pointer;
+        private int _head = 0;
+		private int _tail = 0;
+		private int _count = 0;
+		public int Count => _count;
 		
-        public bool IsEmpty => _pointer == 0;
+        public bool IsEmpty => _count == 0;
 
         public void Enqueue(string element)
 		{ 	
-			if (_pointer == _array.Length)
+			if (_count == Capacity)
 				{
-					throw new StackOverflowException("Queue overflowed");
+					throw new Exception("Queue overflowed");
 				}
-            _array[_pointer] = element;
-            _pointer += 1;
+            _array[_tail] = element;
+            _tail = (_tail + 1) % Capacity;
+			_count++;
             
         }
 
         public string Dequeue()
         {
 			if (IsEmpty) {
-				throw new InvalidOperationException("Queue underflowed");
+				throw new Exception("Queue underflowed");
 			}
-			string value = _array[0];
-			int i;
-			for (i = 0; i < _pointer-1; i++) {
-				_array[i] = _array[i+1];
-			}
-			--_pointer;
+			string value = _array[_head];
+			_array[_head] = null;
+			
+			_head = (_head + 1 ) % Capacity;
+			_count--;
 			return value;
         }
 		
